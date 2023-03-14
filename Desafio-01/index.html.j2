@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IP e Hostname do servidor</title>
+  </head>
+  <body>
+    <h1>IP e Hostname do servidor:</h1>
+    <p>IP: {{ ansible_facts.default_ipv4.address }}</p>
+    <p>Hostname: {{ ansible_facts.hostname }}</p>
+  </body>
+</html>

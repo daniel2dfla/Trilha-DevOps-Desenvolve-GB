@@ -1,0 +1,30 @@
+---
+
+- name: Nginx configuration
+  hosts: all
+  become: True
+  tasks:
+
+  - name: Install Nginx
+    apt:    
+        cache_valid_time: 86400
+        pkg:
+          - nginx
+      
+  - name: enable
+    ansible.builtin.systemd:
+      name: nginx
+      enabled: True
+  
+  - name: configure index html
+    ansible.builtin.template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+      owner: www-data
+      group: www-data
+      mode: '0644'
+
+  - name: restrart ninx
+    ansible.builtin.systemd:
+      name: nginx
+      state: restarted    
