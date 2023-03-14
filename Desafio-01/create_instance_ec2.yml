@@ -1,0 +1,33 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  remote_user: ubuntu
+
+  vars: 
+    key_name: key-ansible
+    region: us-east-1
+    instance_type: t2.micro
+    image:
+      id: ami-0557a15b87f6559cf
+    security_group: groupsBoticario    
+
+  tasks:
+    - name: create instances ec2
+      amazon.aws.ec2_instance:
+        key_name: "{{ key_name }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        security_group: "{{ security_group }}"  
+        region: "{{ region }}"
+        network:
+          assign_public_ip: true
+        state: present
+        tags:
+          Name: NewInstanceBoticario
+      register: ec2
+
+    - name: ec2 exit
+      debug: 
+       var: ec2
